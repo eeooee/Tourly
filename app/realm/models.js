@@ -1,35 +1,36 @@
 import Realm from 'realm';
 
-class Schedule {}
-Schedule.schema = {
-  name: 'Schedule',
-  properties: {
-    tours: {type: 'list', objectType:'Tour'}
-  }
-};
 class Tour{}
 Tour.schema = {
     name: 'Tour',
+    
+  primaryKey:'id',
     properties:{
-        dates: {type: 'list', objectType:'Show'},
+      
+        id: {type:'int'},
+        title: {type:'string'},
+        beginning: {type:'date'},
+        end:{type:'date'},
+        currentlyOn:{type:'bool', optional:true},
+        shows: {type: 'list', objectType:'Show'},
         merch: {type: 'list', objectType:'Merchandise'}
     }
 }
 class Show {}
 Show.schema = {
   name: 'Show',
-  primaryKey:'id',
   properties: {
-      id:{type:'int'},
-    date: {type: 'date'},
-    name:    {type: 'string'},
-    time:    {type: 'string'},
+    atVenue: {type:'bool',optional:true},
+      id: {type:'int'},
+    date: {type: 'date',},
+    name:    {type: 'string',optional:true},
+    time:    {type: 'string',optional:true},
     soundchecktime:    {type: 'string',optional:true},
-    address:    {type: 'string'},
+    address:    {type: 'string',optional:true},
     directions:{type:'string',optional:true},
     host: {type:'string', optional: true},
     bands: {type:'string', optional:true},
-    notes:{type: 'string'},
+    notes:{type: 'string',optional:true},
     guarantee: {type:'string',optional:true}
   }
 };
@@ -39,12 +40,12 @@ Merchandise.schema = {
 name:'Merchandise',
 properties: {
 name:{type:'string'},
-cost:{type:'string'},
-description: {type:'string'},
+cost:{type:'string',optional:true},
+description: {type:'string',optional:true},
 initialStock:{type:'int'},
-sold:{type:'int'},
-image: {type: 'data', option:true}
+sold:{type:'int',optional:true},
+image: {type: 'data', optional:true}
 }
 };
 
-export default new Realm({schema:[Schedule,Tour,Merchandise,Show]});
+export default new Realm({schema:[Tour,Merchandise,Show]});

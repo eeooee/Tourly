@@ -12,23 +12,46 @@ import {
   View
 } from 'react-native';
 import OffTour from "./app/components/offTour/OffTour";
+import OnTour from "./app/components/onTour/OnTour";
 import PickDates from "./app/components/offTour/PickDates";
 import ShowDetails from "./app/components/offTour/ShowDetails";
-
+import TourCalendar from "./app/components/offTour/TourCalendar";
+import Splash from "./app/components/Splash";
+import SeeTours from "./app/components/offTour/SeeTours";
+import MerchList from "./app/components/MerchList";
+import MerchEdit from "./app/components/MerchEdit";
+import AtShow from "./app/components/AtShow/AtShow";
 export default class Tourly extends Component {
 
   renderScene (route, navigator) {
+    if(route.name==='Splash'){
+      return <Splash navigator={navigator} {...route.passProps} />
+    }
     if (route.name === 'OffTour') {
       return <OffTour navigator={navigator} {...route.passProps} />
+    }
+     if(route.name==='SeeTours'){
+      return <SeeTours navigator={navigator} {...route.passProps} />
     }
     if (route.name === 'OnTour') {
       return <OnTour navigator={navigator} {...route.passProps} />
     }
     if(route.name==='AtShow'){
-      return <OnTour navigator={navigator} {...route.passProps}/>
+      return <AtShow navigator={navigator} {...route.passProps}/>
     }
     if(route.name==='ShowDetails'){
       return <ShowDetails navigator={navigator} {...route.passProps}/>
+    }
+      if(route.name==='MerchEdit'){
+      return<MerchEdit navigator={navigator} {...route.passProps}/>
+    }
+    if(route.name==='MerchList'){
+      return<MerchList navigator={navigator} {...route.passProps}/>
+    }
+     if (route.name === 'PickDates') {
+      return <PickDates navigator={navigator} {...route.passProps} />
+    }  if (route.name === 'TourCalendar') {
+      return <TourCalendar navigator={navigator} {...route.passProps} {...this.props}/>
     }
   }
 configureScene (route) {
@@ -37,10 +60,9 @@ configureScene (route) {
  render() {
     return (
         <Navigator
-        configureScene={this.configureScene.bind(this)}
-        style={{ flex: 1, backgroundColor: 'white' }}
-        initialRoute={{ name: 'ShowDetails' }}
-        renderScene={this.renderScene.bind(this)} />
+        style={{ flex: 1 }}
+        initialRoute={{ name: 'Splash' }}
+        renderScene={this.renderScene} />
     );
   }
 }
