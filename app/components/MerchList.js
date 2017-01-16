@@ -19,9 +19,10 @@ merch: merch
     }}
 
   render() {
-    return (
-      <View style={{flex: 1, paddingTop: 22}}>
+    return ( 
+      <View style={styles.ViewContainer}><View style={styles.topCard}>
       <Text>{this.state.merch.title}</Text>
+      </View>
         <ListView
           dataSource={this.state.dataSource}
          renderRow={(rowData)=> this.renderMerch(rowData)}
@@ -29,6 +30,7 @@ merch: merch
           
         />
 
+      <View style={styles.bottomCard}>
         <Button title="Add Merch"
         onPress={()=>{
             this.props.navigator.push({name:'MerchEdit',passProps:{tourID:this.props.tourID}})
@@ -37,7 +39,7 @@ merch: merch
            onPress={()=>{
             this.props.navigator.pop();
         }}/>
-  
+  </View>
       </View>
       
     );
@@ -45,13 +47,64 @@ merch: merch
 
 renderMerch(items){
   return(
+    <View style={styles.listItems}>
   <TouchableHighlight onPress={()=>
       
            this.props.navigator.push({name:'MerchEdit', passProps:{merch: items, tourID:this.props.tourID}})
 }>
 <Text>{items.name}</Text>
 </TouchableHighlight>
+</View>
   )
 }
 }
+
+
+const styles = StyleSheet.create(
+
+    {
+       ViewContainer:{
+            flex:1, 
+            flexDirection: "column",
+            justifyContent:"space-between",
+            alignItems:"stretch",
+            backgroundColor:'dimgrey'
+        },
+        topCard:{
+height:150,
+backgroundColor:'ghostwhite',
+padding:20
+
+
+        },
+        bottomCard:{
+         flex:.75,
+         flexDirection:"column",
+         justifyContent:'space-around',
+         paddingLeft:20,
+         paddingRight:20
+        },
+        buttonWrapper:{
+          flexDirection:'row',
+            paddingBottom:30,
+            paddingRight:20,
+            paddingLeft:20,
+            paddingTop:5
+        },
+        textHL:{
+          color:'ghostwhite'
+        },
+        dateString:{
+          textAlign:'right',
+          color:'darkgrey'
+        },
+        listItems:{
+          height:80,
+          flex:1,
+          flexDirection:"row"
+
+        }
+
+    }
+)
 module.exports = MerchList;

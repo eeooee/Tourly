@@ -12,7 +12,7 @@ class Splash extends Component{
 componentDidMount(){
        setTimeout (() => {
             this.pickScreen();
-        }, 2000); 
+        }, 1200); 
 
 }
 pickScreen= ()=>{
@@ -36,11 +36,31 @@ pickScreen= ()=>{
 }
 render(){
     return(
-        <View>
-        <Text>A SPLASH SCREEN!!!</Text>
+        <View style={styles.splash}>
+        <View style={styles.logoBox}><Text style={styles.logo}>SPLASH</Text></View>
         </View>
     );
 
 }
 }
+const styles = StyleSheet.create({
+ splash:{
+     backgroundColor:'dimgrey',
+     flex:1,
+     flexDirection: 'column',
+justifyContent:'center',
+alignItems:'center'
+ }  , 
+ logoBox:{
+borderColor:'ghostwhite',
+borderWidth:2,
+padding:30,
+ },
+ logo:{
+     color:'ghostwhite',
+     fontSize:20,
+     fontWeight:'900'
+ }
+ 
+})
 module.exports = Splash;

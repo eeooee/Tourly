@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react';
-import {View,Text,StyleSheet,Button,NativeModules,TextInput} from 'react-native';
+import {View,Text,StyleSheet,Button,NativeModules,TextInput,StatusBar} from 'react-native';
 import realm from "../../realm/models.js";
 var moment = require('moment');
 
@@ -10,7 +10,7 @@ export default class PickDates extends Component {
 
   constructor(props) {
     super(props);
-  this.state = {tourID:'0',tourName:'  ',beginning: new Date(),end: new Date()};
+  this.state = {tourID:'0',tourName:'  ',beginning: ' ',end: ' ',beginningString:'',endString:''};
   
   }
   static get defaultProps() {
@@ -40,42 +40,74 @@ export default class PickDates extends Component {
              );
               this.setState({tourID:tourCount});
          
-           alert(this.state.tourID)
            this.props.navigator.push({name:'TourCalendar', passProps:{tourID: tourCount}});
+        }
+
+
+        isEmpty = (date)=>
+        {
+          if(date===' '){
+            return ' '
+          }
+          else return moment(date).format('dddd MMMM Do YYYY');
         }
   
     render(){
         return(
-         <View >
-
+         <View style={styles.ViewContainer}>
+         
+<View style={styles.topCard}>
+<Text>
+Name your tour....
+</Text>
         <TextInput
         onChangeText ={ (name) => {this.setState({tourName:name});} }>
-          Number One Tour Tour
+        
         </TextInput>
-        <Text >
+        </View>
+        <View style={styles.bottomCard}>
+        <View>
+        <Text style={styles.textHL}>
           What date is your first show?
+           </Text >
+  <Text style={styles.dateString} >
+          {this.state.beginningString}
         </Text>
+
+        <View style={styles.buttonWrapper}>
          <Button 
-        title="pick a date"
+        title='starts'
+        color='rosybrown'
         onPress={() =>NativeModules.DateAndroid.showDatepicker(function() {}, (year, month,day)=> {
             let date = new Date(year,month,day)
-          this.setState({beginning:date});
-        alert(this.state.beginning);})}
-        />
-        <Text >
+          this.setState({beginning:date, beginningString:moment(date).format('dddd MMMM Do YYYY')});
+          
+  
+        })}
+        /></View>
+        <Text style={styles.textHL} >
           What date is your last show?
+ </Text >
+  <Text style={styles.dateString} >
+          {this.state.endString}
         </Text>
+
+        <View style={styles.buttonWrapper}>
         <Button 
-        title="pick a date"
+        title='ends'
+        color='rosybrown'
         onPress={() =>NativeModules.DateAndroid.showDatepicker(function(){}, (year, month,day)=> {
             let date = new Date(year,month,day)
-          this.setState({end:date});
-        alert(this.state.end);})}
-        />
-        <Button 
+          this.setState({end:date, endString:moment(date).format('dddd MMMM Do YYYY')});
+        })}
+        /></View>
+        </View>
+        <View style={styles.buttonWrapper}><Button 
         title="done"
         onPress={this.addTour}
-        />
+        color='rosybrown'
+        /></View>
+        </View>
       </View>
         )
     }
@@ -84,12 +116,41 @@ export default class PickDates extends Component {
 const styles = StyleSheet.create(
 
     {
-        ViewContainer:{
+       ViewContainer:{
             flex:1, 
             flexDirection: "column",
-            justifyContent:"flex-start",
-            alignItems:"stretch"
+            justifyContent:"space-between",
+            alignItems:"stretch",
+            backgroundColor:'dimgrey'
+        },
+        topCard:{
+height:150,
+backgroundColor:'ghostwhite',
+paddingTop:20,
+            paddingLeft:20,
+
+        },
+        bottomCard:{
+         flex:.75,
+         flexDirection:"column",
+         justifyContent:'space-around',
+         paddingLeft:20,
+         paddingRight:20
+        },
+        buttonWrapper:{
+            paddingBottom:30,
+            paddingRight:20,
+            paddingLeft:20,
+            paddingTop:5
+        },
+        textHL:{
+          color:'ghostwhite'
+        },
+        dateString:{
+          textAlign:'right',
+          color:'darkgrey'
         }
+
     }
 )
 

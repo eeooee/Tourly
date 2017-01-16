@@ -13,14 +13,23 @@ Tour.schema = {
         end:{type:'date'},
         currentlyOn:{type:'bool', optional:true},
         shows: {type: 'list', objectType:'Show'},
-        merch: {type: 'list', objectType:'Merchandise'}
+        merch: {type: 'list', objectType:'Merchandise'},
+        bandName: {type:'string',optional:true},
+        origin: {type:'string',optional:true},
+        about:{type:'string',optional:true},
+        websites:{type:'string',optional:true},
+        email:{type:'string',optional:true},
+
+
+      
     }
 }
 class Show {}
 Show.schema = {
   name: 'Show',
   properties: {
-    atVenue: {type:'bool',optional:true},
+    atShow: {type:'bool',optional:true},
+    edited:{type:'bool', default:false } ,
       id: {type:'int'},
     date: {type: 'date',},
     name:    {type: 'string',optional:true},

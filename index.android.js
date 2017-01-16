@@ -21,6 +21,8 @@ import SeeTours from "./app/components/offTour/SeeTours";
 import MerchList from "./app/components/MerchList";
 import MerchEdit from "./app/components/MerchEdit";
 import AtShow from "./app/components/AtShow/AtShow";
+import ContactCard from "./app/components/AtShow/ContactCard";
+import SellMerch from "./app/components/AtShow/SellMerch";
 export default class Tourly extends Component {
 
   renderScene (route, navigator) {
@@ -39,8 +41,14 @@ export default class Tourly extends Component {
     if(route.name==='AtShow'){
       return <AtShow navigator={navigator} {...route.passProps}/>
     }
+    if(route.name==='SellMerch'){
+      return <SellMerch navigator={navigator} {...route.passProps}/>
+    }
     if(route.name==='ShowDetails'){
       return <ShowDetails navigator={navigator} {...route.passProps}/>
+    }
+    if(route.name==='ContactCard'){
+      return<ContactCard navigator={navigator} {...route.passProps}/>
     }
       if(route.name==='MerchEdit'){
       return<MerchEdit navigator={navigator} {...route.passProps}/>
