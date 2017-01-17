@@ -21,24 +21,41 @@ merch: merch
   render() {
     return ( 
       <View style={styles.ViewContainer}><View style={styles.topCard}>
-      <Text>{this.state.merch.title}</Text>
+      
+      <Text style={{color:'rosybrown', fontSize:30,
+     fontWeight:'900',textAlign:'right'}}>{this.state.merch.title}</Text>
+     
+    <Text style={{color:'dimgrey', fontSize:18,
+     fontWeight:'900',textAlign:'right'}}>Create merch for your tour.  Tap an existing item to edit it. </Text>
       </View>
+      
+
+      <View style={styles.bottomCard}>
         <ListView
           dataSource={this.state.dataSource}
          renderRow={(rowData)=> this.renderMerch(rowData)}
          enableEmptySections={true}
           
         />
-
-      <View style={styles.bottomCard}>
-        <Button title="Add Merch"
+        <View style={styles.buttonWrapper}>
+        <Button color='rosybrown'
+        title="Add Merch"
         onPress={()=>{
             this.props.navigator.push({name:'MerchEdit',passProps:{tourID:this.props.tourID}})
         }}/>
-        <Button title="Go Back"
+        </View>
+        <View style={{
+            paddingBottom:30,
+            paddingRight:20,
+            paddingLeft:20,
+           }}>
+        <Button 
+        color='rosybrown'
+        title="Go Back"
            onPress={()=>{
             this.props.navigator.pop();
         }}/>
+        </View>
   </View>
       </View>
       
@@ -47,14 +64,18 @@ merch: merch
 
 renderMerch(items){
   return(
-    <View style={styles.listItems}>
   <TouchableHighlight onPress={()=>
       
            this.props.navigator.push({name:'MerchEdit', passProps:{merch: items, tourID:this.props.tourID}})
 }>
-<Text>{items.name}</Text>
-</TouchableHighlight>
+
+<View style={styles.card}>
+<View style={{flex:4, padding:5}}>
+<Text style={styles.textLight}>{items.name}</Text>
+<Text>{"\t"}{items.description}</Text>
 </View>
+</View>
+</TouchableHighlight>
   )
 }
 }
@@ -70,11 +91,27 @@ const styles = StyleSheet.create(
             alignItems:"stretch",
             backgroundColor:'dimgrey'
         },
+        textLight:{
+          color:'rosybrown',
+          fontSize:18,
+          fontWeight:'bold'
+        },
         topCard:{
 height:150,
 backgroundColor:'ghostwhite',
 padding:20
 
+
+        },
+        
+        card:{
+          margin:10,
+          flex:1,
+          flexDirection:'row',
+            justifyContent:"space-between",
+            alignItems:'center',
+backgroundColor:'ghostwhite',
+padding:10
 
         },
         bottomCard:{
@@ -85,11 +122,10 @@ padding:20
          paddingRight:20
         },
         buttonWrapper:{
-          flexDirection:'row',
-            paddingBottom:30,
+            paddingBottom:10,
             paddingRight:20,
             paddingLeft:20,
-            paddingTop:5
+            paddingTop:10
         },
         textHL:{
           color:'ghostwhite'

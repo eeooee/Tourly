@@ -5,7 +5,7 @@ import {View,Text,Button,
   StyleSheet,Navigator,TouchableHighlight,TextInput} from 'react-native';
   import realm from "../../realm/models.js";
 
-  export default class ContactCard extends Component{
+  export default class EditContact extends Component{
 constructor(props){
     super(props)
     let tour = realm.objectForPrimaryKey('Tour',this.props.tourID);
@@ -15,19 +15,24 @@ render(){
    return( 
        <View style={styles.ViewContainer}>
        <View style={styles.card}>
-       <Text>contact info!!! </Text>
-   <TextInput placeholder={"Your Band's Name"}></TextInput>
-   <TextInput placeholder={"Websites"}></TextInput>
+       <Text style={styles.bigLight}>{this.state.tour.title}</Text>
+       <Text style={styles.textLight}>\tFill out some information about your act so it's easy to share information on the road. </Text>
+       
+   <TextInput placeholder={"Your Name"}></TextInput>
+   <TextInput placeholder={"Your Act's Name"}></TextInput>
+   <TextInput placeholder={"A brief description of your act... \n\t 'we like to play the greatest jams in the midwest.'"}
+   multiline={true} numberOfLines={2}></TextInput>
+   <TextInput placeholder={"Websites i.e. bandcamp, twitter"}></TextInput>
    <TextInput placeholder={"Email"}></TextInput>
-   <TextInput placeholder={"Origin"}></TextInput>
-   <TextInput placeholder={"About"}></TextInput>
-  
+   <TextInput placeholder={"Place of origin"}></TextInput>
    </View>
    <View style={styles.buttonWrapper}>
-     <Button title="Back"
+     <Button title="Save"
      color="rosybrown"
-    onPress={()=>this.props.navigator.pop()}
+    onPress={()=>
+           this.props.navigator.push({name:'TourCalendar', passProps:{tourID: this.state.tour.id}})}
    />
+   
    </View>
    </View>)
 }
@@ -38,12 +43,17 @@ const styles = StyleSheet.create(
      textLight:{
           color:'ghostwhite'
         },
+          bigLight:{
+          color:'ghostwhite',
+          fontSize:20,
+          fontWeight:'bold'
+        },
        ViewContainer:{
             flex:1, 
             flexDirection: "column",
             justifyContent:"center",
             alignItems:"stretch",
-            backgroundColor:'black'
+            backgroundColor:'ghostwhite'
         },
            buttonWrapper:{
              
@@ -63,4 +73,4 @@ padding:30
         }
   }
 )
-  module.exports = ContactCard
+  module.exports = EditContact

@@ -8,6 +8,7 @@ import {View,Text,Button,
   export default class AtShow extends Component{
 constructor(props){
     super(props)
+    this.state={tourID:this.props.tourID, show:this.props.show}
 }
 render(){
    return( 
@@ -15,7 +16,12 @@ render(){
        <View style={styles.ViewContainer}> 
         <View style={styles.card}>
        <Text style={styles.textLight}>Take notes</Text>
-       <TextInput>some placeholder note stuff right here</TextInput></View >
+       <TextInput
+       numberOfLines={3}
+       keyboardType= 'default'
+       onChangeText={(text)=>{
+    realm.write(()=>{
+    this.state.show.notes =text})}}>{this.props.show.notes}</TextInput></View >
         <View style={styles.card}>
         <Text style={styles.textLight}>Sell Merch</Text>
 
@@ -53,7 +59,7 @@ const styles = StyleSheet.create(
             flexDirection: "column",
             justifyContent:"center",
             alignItems:"stretch",
-            backgroundColor:'dimgrey'
+            backgroundColor:'black'
         },
            buttonWrapper:{
              
@@ -67,7 +73,7 @@ const styles = StyleSheet.create(
           flex:1,
             flexDirection: "column",
             justifyContent:"space-between",
-backgroundColor:'black',
+backgroundColor:'dimgrey',
 paddingTop:20,
             paddingLeft:20,
             paddingRight:15,

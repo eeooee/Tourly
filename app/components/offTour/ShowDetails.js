@@ -8,24 +8,28 @@ var moment = require('moment');
 export default class ShowDetails extends Component {
 constructor(props){
     super(props);
-    this.state= {name:'', time:'',soundchecktime:'',address:'',host:'',guarantee:'',bands:'',notes:''};
+    this.state= {name:'', time:'',soundchecktime:'',address:'',host:'',guarantee:'',bands:'',notes:'', show: this.props.show, tour:this.props.tour};
+     if(this.state.show.edited){
+        this.state ={name:this.props.show.name, time:this.props.show.time,soundchecktime:this.props.show.soundchecktime,address:this.props.show.address,host:this.props.show.host,guarantee:this.props.show.guarantee,bands:this.props.show.bands,notes:this.props.show.notes,show: this.props.show, tour:this.props.tour};
+     }
+          
    
 }
 
 onCheck(){
     realm.write(()=>{
-         this.props.show.name = this.state.name;
-         this.props.show.time = this.state.time;
-         this.props.show.soundchecktime = this.state.soundchecktime;
-         this.props.show.address = this.state.address;
-         this.props.show.host = this.state.host;
-         this.props.show.bands = this.state.bands;
-         this.props.show.notes = this.state.notes;
-         this.props.show.guarantee = this.state.guarantee;
-         this.props.show.edited = true;
+         this.state.show.name = this.state.name;
+         this.state.show.time = this.state.time;
+         this.state.show.soundchecktime = this.state.soundchecktime;
+         this.state.show.address = this.state.address;
+         this.state.show.host = this.state.host;
+         this.state.show.bands = this.state.bands;
+         this.state.show.notes = this.state.notes;
+         this.state.show.guarantee = this.state.guarantee;
+         this.state.show.edited = true;
     });
     this.forceUpdate();
-    this.props.navigator.pop();
+        this.props.navigator.replacePreviousAndPop({name:'TourCalendar', passProps:{tourID: this.state.tour.id}});
 }
 
 parseTime(hour,minute){
@@ -45,7 +49,7 @@ return(hour + ':' + minute + ' am')
            <TextInput
           placeholder={"name for show"}
           onChangeText={(name)=>this.setState({name})}
-    >{this.props.show.name}</TextInput>
+    >{this.state.name}</TextInput>
     <View style={styles.buttonWrapper}>
     <Text>{'\n'}{this.state.time}</Text>
     <Text>{'\n'}{this.state.soundchecktime}</Text>
@@ -75,32 +79,34 @@ return(hour + ':' + minute + ' am')
   }
         />
     </View>
+      
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           placeholder={"venue address"}
-          onEndEditing={(address)=>this.addressValidator(address)}
-      />
+          onChangeText={(input)=>this.setState({address:input})}
+      >{this.state.address}</TextInput>
+      
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           placeholder={"host of show"}
-          onChangeText={(host)=>this.setState({host})}
-      />
+          onChangeText={(host)=>this.setState({host:host})}
+      >{this.state.host}</TextInput>
 
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           placeholder={"guarantee"}
-          onChangeText={(guarantee)=>this.setState({guarantee})}
-      />
+          onChangeText={(guarantee)=>this.setState({guarantee:guarantee})}
+      >{this.state.guarantee}</TextInput>
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           placeholder={"supporting acts"}
-          onChangeText={(bands)=>this.setState({bands})}
-      />
+          onChangeText={(bands)=>this.setState({bands:bands})}
+      >{this.state.bands}</TextInput>
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           placeholder={"notes"}
-          onChangeText={(notes)=>this.setState({notes})}
-      />
+          onChangeText={(notes)=>this.setState({notes:notes})}
+     >{this.state.notes}</TextInput>
 
       
         <Button 
@@ -108,8 +114,7 @@ return(hour + ':' + minute + ' am')
         color='rosybrown'
         onPress={() => this.onCheck('nah')}
         />
-        <Text>{this.state.name.split(' ').map((word) => word && '🍕').join(' ')}</Text>
-        </View>
+          </View>
       </View>
         )
     }

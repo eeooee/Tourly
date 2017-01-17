@@ -40,7 +40,7 @@ export default class PickDates extends Component {
              );
               this.setState({tourID:tourCount});
          
-           this.props.navigator.push({name:'TourCalendar', passProps:{tourID: tourCount}});
+           this.props.navigator.push({name:'EditContact', passProps:{tourID: tourCount}});
         }
 
 
