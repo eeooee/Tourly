@@ -19,25 +19,29 @@ pickScreen= ()=>{
     let tours = realm.objects('Tour');
     let today = moment({hour:0}).toDate();
     let tomorrow = moment({hour:24}).toDate();
-    let currentTour = tours.slice(0,1);
-    let filteredTour = tours.filtered('beginning <= $0 ', today);
-    if(currentTour[0]===undefined){
+    let filteredTour = tours.filtered('beginning >= $0 ', today);
+    if(filteredTour.length==0){
        return this.props.navigator.replace({name:'OffTour'});
     }
     else {
-            let filteredShows = currentTour[0].shows.filtered('date >= $0&&date<=$1 ', today,tomorrow);
+    let currentTour = filteredTour[0];
+            let filteredShows = currentTour.shows.filtered('date >= $0&&date<=$1 ', today,tomorrow);
+            if(filteredShows[0].atShow){
+                return this.props.navigator.replace({name:'AtShow', passProps:{tourID:currentTour[0].id, show:filteredShows[0]}});
+            }
+            else{
         return this.props.navigator.replace(
-            {name:'OnTour', passProps:{tour : currentTour[0], show: filteredShows[0]}
-    });
+            {name:'OnTour', passProps:{tour : currentTour[0], show: filteredShows[0]}});
     }
     
 
 
 }
+}
 render(){
     return(
         <View style={styles.splash}>
-        <View style={styles.logoBox}><Text style={styles.logo}>SPLASH</Text></View>
+        <View style={styles.logoBox}><Text style={styles.logo}>this tour</Text></View>
         </View>
     );
 

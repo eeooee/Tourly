@@ -10,7 +10,7 @@ constructor(props){
     super(props);
     this.state= {name:'', time:'',soundchecktime:'',address:'',host:'',guarantee:'',bands:'',notes:'', show: this.props.show, tour:this.props.tour};
      if(this.state.show.edited){
-        this.state ={name:this.props.show.name, time:this.props.show.time,soundchecktime:this.props.show.soundchecktime,address:this.props.show.address,host:this.props.show.host,guarantee:this.props.show.guarantee,bands:this.props.show.bands,notes:this.props.show.notes,show: this.props.show, tour:this.props.tour};
+        this.state ={name:this.props.show.name, time:this.props.show.time,soundchecktime:this.props.show.soundchecktime,address:this.props.show.address,host:this.props.show.host,guarantee:this.props.show.guarantee,bands:this.props.show.bands,notes:this.props.show.notes,show: this.props.show, tour:this.state.tour};
      }
           
    
@@ -95,6 +95,7 @@ return(hour + ':' + minute + ' am')
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           placeholder={"guarantee"}
+        keyboardType={"numeric"}
           onChangeText={(guarantee)=>this.setState({guarantee:guarantee})}
       >{this.state.guarantee}</TextInput>
       <TextInput

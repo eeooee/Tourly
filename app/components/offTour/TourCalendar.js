@@ -84,7 +84,7 @@ renderDays(days){
     return(
     <View style={styles.card}>
   <TouchableHighlight onPress={()=>
-           this.props.navigator.push({name:'ShowDetails', passProps:{show: days}})
+           this.props.navigator.push({name:'ShowDetails', passProps:{show: days,tour:this.state.tour}})
 }>
 <Text style={{color:'rosybrown', fontSize:20}}>{days.id+1}
 

@@ -7,20 +7,21 @@ import {View,Text,Button,
 
   export default class ContactCard extends Component{
 constructor(props){
-    super(props)
-    let tour = realm.objectForPrimaryKey('Tour',this.props.tourID);
-    this.state={tour:tour};
+    super(props);
+    let tourFromID = realm.objectForPrimaryKey('Tour',this.props.tourID);
+    this.state={tour:tourFromID};
+
 }
 render(){
    return( 
        <View style={styles.ViewContainer}>
        <View style={styles.card}>
-       <Text>contact info!!! </Text>
-   <TextInput placeholder={"Your Band's Name"}></TextInput>
-   <TextInput placeholder={"Websites"}></TextInput>
-   <TextInput placeholder={"Email"}></TextInput>
-   <TextInput placeholder={"Origin"}></TextInput>
-   <TextInput placeholder={"About"}></TextInput>
+<Text style={{color:'ghostwhite'}}>{this.state.tour.name}</Text>
+<Text>{this.state.tour.actName}</Text>
+<Text>{this.state.tour.description}</Text>
+<Text>{this.state.tour.website}</Text>
+<Text>{this.state.tour.email}</Text>
+<Text>{this.state.tour.origin}</Text>
   
    </View>
    <View style={styles.buttonWrapper}>

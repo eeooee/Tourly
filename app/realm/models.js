@@ -14,11 +14,13 @@ Tour.schema = {
         currentlyOn:{type:'bool', optional:true},
         shows: {type: 'list', objectType:'Show'},
         merch: {type: 'list', objectType:'Merchandise'},
-        bandName: {type:'string',optional:true},
-        origin: {type:'string',optional:true},
-        about:{type:'string',optional:true},
-        websites:{type:'string',optional:true},
-        email:{type:'string',optional:true},
+    name:{type:'string',default:''},
+    actName:{type:'string',default:''},
+    description:{type:'string',default:''},
+    website:{type:'string',default:''},
+    email:{type:'string',default:''},
+    origin:{type:'string',default:''},
+        
 
 
       

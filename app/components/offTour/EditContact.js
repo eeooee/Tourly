@@ -9,28 +9,46 @@ import {View,Text,Button,
 constructor(props){
     super(props)
     let tour = realm.objectForPrimaryKey('Tour',this.props.tourID);
-    this.state={tour:tour};
+    this.state={tour:tour, name:tour.name,actName:tour.actName,description:tour.description,website:tour.website,email:tour.email,origin:tour.origin};
+}
+
+saveContact=()=>{
+  realm.write(()=>{
+  
+    this.state.tour.name=this.state.name;
+    this.state.tour.actName=this.state.actName;
+    this.state.tour.description=this.state.description;
+    this.state.tour.website=this.state.website;
+    this.state.tour.email=this.state.email;
+    this.state.tour.origin=this.state.origin;
+    });
+           this.props.navigator.push({name:'TourCalendar', passProps:{tourID: this.state.tour.id}})
 }
 render(){
    return( 
        <View style={styles.ViewContainer}>
        <View style={styles.card}>
        <Text style={styles.bigLight}>{this.state.tour.title}</Text>
-       <Text style={styles.textLight}>\tFill out some information about your act so it's easy to share information on the road. </Text>
+       <Text style={styles.textLight}>{"\t"}Fill out some information about your act so it's easy to share information on the road. </Text>
        
-   <TextInput placeholder={"Your Name"}></TextInput>
-   <TextInput placeholder={"Your Act's Name"}></TextInput>
+   <TextInput placeholder={"Your Name"}>
+  { this.state.name}</TextInput>
+   <TextInput placeholder={"Your Act's Name"}>
+    { this.state.actName}</TextInput>
    <TextInput placeholder={"A brief description of your act... \n\t 'we like to play the greatest jams in the midwest.'"}
-   multiline={true} numberOfLines={2}></TextInput>
-   <TextInput placeholder={"Websites i.e. bandcamp, twitter"}></TextInput>
-   <TextInput placeholder={"Email"}></TextInput>
-   <TextInput placeholder={"Place of origin"}></TextInput>
+   multiline={true} numberOfLines={2}>
+    { this.state.description}</TextInput>
+   <TextInput placeholder={"Websites i.e. bandcamp, twitter"}>
+    { this.state.website}</TextInput>
+   <TextInput placeholder={"Email"}>
+    { this.state.email}</TextInput>
+   <TextInput placeholder={"Place of origin"}>
+    { this.state.origin}</TextInput>
    </View>
    <View style={styles.buttonWrapper}>
      <Button title="Save"
      color="rosybrown"
-    onPress={()=>
-           this.props.navigator.push({name:'TourCalendar', passProps:{tourID: this.state.tour.id}})}
+    onPress={()=>this.saveContact()}
    />
    
    </View>

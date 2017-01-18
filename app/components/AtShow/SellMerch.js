@@ -10,13 +10,15 @@ constructor(props){
     super(props);
     
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    realm.addListener('change',()=>{this.setState({dataSource:ds.cloneWithRows(realm.objectForPrimaryKey('Tour',this.props.tourID).merch) })})
-    let merch = realm.objectForPrimaryKey('Tour',this.props.tourID);
-
+       let merch = realm.objectForPrimaryKey('Tour',this.props.tourID);
     this.state = {
+      ds: ds,
       dataSource: ds.cloneWithRows(merch.merch),
-merch: merch
+merch: merch.merch
     };
+
+ 
+
    
     
 }
@@ -62,7 +64,10 @@ return;
 realm.write(()=>{
 item.sold+=1;
 })
+let ds = this.state.ds;
+this.setState({dataSource:ds.cloneWithRows(this.state.merch) });
 }
+
 }
   }
 
